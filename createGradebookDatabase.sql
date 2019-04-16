@@ -54,7 +54,7 @@ CREATE TABLE `Assignments` (
   `assign_id` int(11) NOT NULL AUTO_INCREMENT,
   `distribution_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
-  `instance` int(11) NOT NULL,
+  `instance` int(11) NOT NULL,				-- number of type of assignment. EX. Assignment 4 is the 3rd instance of a Lab
   `possible_points` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`assign_id`)
 );
@@ -217,7 +217,7 @@ UNLOCK TABLES;
 -- Creates the registration table and if already existing, drops and recreates
 DROP TABLE IF EXISTS `registration`;
 CREATE TABLE `registration` (
-  `student_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL, 
   `course_id` int(11) NOT NULL,
   PRIMARY KEY (`student_id`,`course_id`)
 );
