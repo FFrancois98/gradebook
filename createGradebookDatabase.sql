@@ -39,12 +39,12 @@ CREATE TABLE `Students` (
 -- Inserts the default values of the student table
 LOCK TABLES `students` WRITE;
 INSERT INTO `students` 
-VALUES 	(1,'Tamang','Ashok','tamash07@gmail.com'),
-		(2,'Potter','Harry','pothar01@yahoo.com'),
-        (3,'Hathaway','Anna','annahath@aol.com'),
+VALUES 	(1,'Jordan','Micheal','mikejordan07@gmail.com'),
+		(2,'Johnson','Harry','harryjohnson01@yahoo.com'),
+        (3,'Green','Anna','annagreen@aol.com'),
         (4,'Micheam','Hermoine','hmicheam@hogwarts.com'),
-        (5,'Quack','Gauri','gquack@hotmail.com'),
-        (6,'Ponting','Ricky','rickpont@live.com'),
+        (5,'Quack','Duck','dquack@hotmail.com'),
+        (6,'Smithing','Micky','micksmith@live.com'),
         (7,'Williams','Serena','serena@tennis.com');        
 UNLOCK TABLES;
 

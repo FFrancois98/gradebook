@@ -78,6 +78,7 @@ WHERE assign_id = 34
 
 -- TASK 11 QUERY
 -- Compute the grade for a student
+/*
 SELECT 
 	SUM((sc.points / asg.possible_points) * (gd.percent / c.num_inst)) AS final_grade
 FROM student_scores sc 
@@ -94,12 +95,36 @@ JOIN (
         GROUP BY gd.distribution_id) 
         c ON c.distribution_id = gd.distribution_id 
 WHERE gd.course_id = 3 AND student_id = 1;
+*/
+
+-- gets the gpercate column
+select distinct
+	sum(c.gpercate) as final_grade
+from grade_distribution gd
+join (
+			select distinct 
+				gd.distribution_id,
+				gd.course_id,
+				gd.category,
+				gd.percent,
+				sum(asg.possible_points) as PP,
+				sum(sc.points) as AP,
+				sum(sc.points) / sum(asg.possible_points) as APerAss,
+				gd.percent * (sum(sc.points) / sum(asg.possible_points)) as GPerCate
+			from grade_distribution gd
+			join assignments asg on gd.distribution_id = asg.distribution_id
+			join student_scores sc on asg.assign_id = sc.assign_id
+			WHERE gd.course_id = 5 AND sc.student_id = 1
+			group by gd.distribution_id)
+            c on gd.distribution_id = c.distribution_id
+where gd.course_id = 5;
+            
 
 -- TASK 12 QUERY
 -- Compute the grade for a student, where the lowest score for a given category is dropped.
 SELECT SUM(
     IF(
-        (gd.category = 'Project' AND sc.points / asg.possible_points <= lw.low), 
+        (gd.category = 'Test' AND sc.points / asg.possible_points <= lw.low), 
         gd.percent / c.counter, 
         (sc.points / asg.possible_points) * (gd.percent / c.counter)
     )
@@ -110,14 +135,14 @@ JOIN grade_distribution gd ON gd.distribution_ID = asg.distribution_ID
 JOIN (SELECT gd.distribution_ID, COUNT(*) AS counter FROM student_scores sc 
         LEFT JOIN assignments asg ON sc.assign_ID = asg.assign_ID 
         JOIN grade_distribution gd ON gd.distribution_ID = asg.distribution_ID 
-        WHERE gd.course_ID = 3 AND student_ID = 1 GROUP BY gd.distribution_ID) 
+        WHERE gd.course_ID = 1 AND student_ID = 6 GROUP BY gd.distribution_ID) 
         c ON c.distribution_ID = gd.distribution_ID 
 JOIN (SELECT gd.distribution_ID, MIN(sc.points / asg.possible_points) AS low FROM student_scores sc 
         LEFT JOIN assignments asg ON sc.assign_ID = asg.assign_ID 
         JOIN grade_distribution gd ON gd.distribution_ID = asg.distribution_ID 
-        WHERE gd.course_ID = 3 AND student_ID = 1 GROUP BY gd.distribution_ID) 
+        WHERE gd.course_ID = 1 AND student_ID = 6 GROUP BY gd.distribution_ID) 
         lw ON lw.distribution_ID = gd.distribution_ID 
-WHERE gd.course_ID = 3 AND student_ID = 1;
+WHERE gd.course_ID = 1 AND student_ID = 6;
 
 
 
